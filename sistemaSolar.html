@@ -401,21 +401,30 @@
             */
 
             // Constantes
-            var dias_orbita_tierra = 356;
+            var dias_orbita_tierra = 365;
             var dias_orbita_luna = 30;
             var dias_orbita_iss = 20;
-            var inclinacion_tierra = (23 * Math.PI)/180;
+            var inclinacion_tierra = (23 * Math.PI / 180)
 
             // tierra
             m1=mat4.create();
+
             mat4.rotate(m1, m1, (2 * Math.PI * frame)/dias_orbita_tierra, [0,1,0]);
             mat4.translate(m1,m1,[60,0,0]);
+            mat4.rotate(m1, m1, (2 * Math.PI * frame)/dias_orbita_tierra, [0,-1,0]);
+
             mat4.rotate(m1, m1, inclinacion_tierra, [1,0,0]);
+            mat4.rotate(m1, m1, (2 * Math.PI * frame)/24, [0,1,0]);
+            
             setTransform(tierra,m1);
   
             // luna
-            m2=m1;
-            mat4.rotate(m2, m2, -inclinacion_tierra, [1,0,0]);
+            m2=mat4.create();
+
+            mat4.rotate(m2, m2, (2 * Math.PI * frame)/dias_orbita_tierra, [0,1,0]);
+            mat4.translate(m2,m2,[60,0,0]);
+            mat4.rotate(m2, m2, (2 * Math.PI * frame)/dias_orbita_tierra, [0,-1,0]);
+
             mat4.rotate(m2, m2, (2 * Math.PI * frame)/dias_orbita_luna, [0,1,0]);
             mat4.translate(m2,m2,[30,0,0]);
             setTransform(luna,m2);  
@@ -431,7 +440,8 @@
             m4=mat4.create();
             mat4.rotate(m4, m4, (2 * Math.PI * frame)/dias_orbita_tierra, [0,1,0]);
             mat4.translate(m4,m4,[60,0,0]);
-            mat4.rotate(m4, m4, inclinacion_tierra, [1,0,0]);
+            mat4.rotate(m4, m4, (2 * Math.PI * frame)/dias_orbita_tierra, [0,-1,0]);
+
 
             mat4.rotate(m4, m4, (2 * Math.PI * frame)/dias_orbita_iss, [0,0,1]);
             mat4.translate(m4,m4,[0,20,0]);
